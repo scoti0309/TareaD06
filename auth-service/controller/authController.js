@@ -1,8 +1,11 @@
 // controllers/authController.js
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken');
-const { sql, poolPromise } = require('../config/dbConfig');
+const { sql, poolPromise } = require('../../config/dbConfig');
 
 exports.login = async (req, res) => {
+  console.log('JWT_SECRET:', process.env.JWT_SECRET);
   try {
     const pool = await poolPromise;
     const { email, dni } = req.body;

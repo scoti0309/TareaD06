@@ -1,4 +1,4 @@
-const { poolPromise } = require('../config/dbConfig');
+const { poolPromise } = require('../../config/dbConfig');
 
 exports.getEspecialidades = async () => {
   // Espera a que la conexión esté lista

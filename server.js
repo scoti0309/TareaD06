@@ -4,13 +4,11 @@ const swaggerUi = require('swagger-ui-express');
 const yaml = require('js-yaml');
 const fs = require('fs');
 const cors = require('cors');
-const dbConfig = require('./config/dbConfig');
-const citasRoutes = require('./routes/citasRoutes');
-const especialidadesRoutes = require('./routes/especialidadesRoutes');
-const pacientesRoutes = require('./routes/pacientesRoutes');
-const authRoutes = require('./routes/authRoutes');
-const medicosRoutes = require('./routes/medicosRoutes');
-const authMiddleware = require('./middlewares/authMiddleware')
+const authRoutes = require('./auth-service/routes/authRoutes');  // Rutas de autenticación
+const citasRoutes = require('./citas-service/routes/citasRoutes');      // Rutas de citas
+const especialidadesRoutes = require('./citas-service/routes/especialidadesRoutes');
+const medicosRoutes = require('./citas-service/routes/medicosRoutes'); 
+const pacientesRoutes = require('./pacientes-service/routes/pacientesRoutes');  // Rutas de pacientes
 const app = express();
 const port = 5000;
 const jwt     = require('jsonwebtoken');
@@ -21,25 +19,14 @@ const swaggerDocument = yaml.load(fs.readFileSync('./swagger.yaml', 'utf8'));
 app.use(cors());
 app.use(express.json());
 
-
-
-// Rutas
-
-// Rutas públicas
-app.use('/api/login', authRoutes);
-app.use('/api/pacientes', pacientesRoutes); // si quieres permitir registro público
-
-// **A partir de aquí todas requieren JWT**
-app.use('/api/citas', authMiddleware, citasRoutes);
-app.use('/api/especialidades', authMiddleware, especialidadesRoutes);
-app.use('/api/medicos', authMiddleware, medicosRoutes);
-
-//app.use('/api', authRoutes);
-//app.use('/api/citas',authenticateToken, citasRoutes);
-//app.use('/api/especialidades', especialidadesRoutes);
-//app.use('/api/pacientes',authenticateToken, pacientesRoutes);
-//app.use('/api/medicos', medicosRoutes);
+// Rutas de microservicios
+app.use('/api/auth', authRoutes);  // Rutas de autenticación
+app.use('/api/citas', citasRoutes);  // Rutas de citas (protegidas por JWT)
+app.use('/api/pacientes', pacientesRoutes);  
+app.use('/api/especialidades', especialidadesRoutes);
+app.use('/api/medicos', medicosRoutes);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });
+

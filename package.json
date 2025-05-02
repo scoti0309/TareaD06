@@ -900,5 +900,8 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3"
+  }
 }

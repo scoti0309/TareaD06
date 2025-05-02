@@ -1,5 +1,5 @@
 // models/pacientesModel.js
-const { sql, poolPromise } = require('../config/dbConfig');
+const { sql, poolPromise } = require('../../config/dbConfig');
 
 exports.getPacientes = async () => {
   const pool = await poolPromise;

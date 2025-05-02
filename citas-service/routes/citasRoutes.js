@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const citasController = require('../controllers/citasController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../../middlewares/authMiddleware');
 
 
 router.post('/',authMiddleware, citasController.createCita);

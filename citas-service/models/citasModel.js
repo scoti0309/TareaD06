@@ -1,5 +1,5 @@
 // models/citasModel.js
-const { sql, poolPromise } = require('../config/dbConfig');
+const { sql, poolPromise } = require('../../config/dbConfig');
 
 exports.createCita = async (paciente_id, medico_id, fecha_cita, motivo) => {
   const pool = await poolPromise;
