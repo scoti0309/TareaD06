@@ -6,6 +6,8 @@ const { sql, poolPromise } = require('../../config/dbConfig');
 
 exports.login = async (req, res) => {
   console.log('JWT_SECRET:', process.env.JWT_SECRET);
+  console.log('TEST_ENV:', process.env.TEST_ENV);  // Esto debería mostrar 'success' si dotenv funciona correctamente
+
   try {
     const pool = await poolPromise;
     const { email, dni } = req.body;
